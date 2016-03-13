@@ -29,8 +29,7 @@ module.exports = React.createClass({
             content="width=device-width, initial-scale=1.0 maximum-scale=1.0"
           />
           <title>{title}</title>
-          <link rel="shortcut icon" href={this.props.favicon}/>
-          <link href='https://fonts.googleapis.com/css?family=Roboto:700|Raleway:600,700|PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css' />
+          <link rel="shortcut icon" href="/images/favicon.png"/>
           {cssLink}
         </head>
         <body>

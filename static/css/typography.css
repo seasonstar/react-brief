@@ -4,7 +4,7 @@ html, body {
   font-size: 16px;
   font-size: 100%;
   font-family: "PT Sans", Georgia, Times, serif;
-  color: #222;
+  color: #444;
 }
 
 /* Paragraph
@@ -14,7 +14,7 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", Helvetica, Arial, sans-serif;
-  color: #222;
+  color: #333;
 }
 
 h1 {
@@ -120,19 +120,19 @@ a:hover {
 }
 
 a:visited {
-  color: #222;
+  color: #444;
 }
 a:visited:hover {
-  color: #222;
+  color: #444;
   border-bottom: 1px solid;
 }
 a:active {
-  color: #222;
+  color: #444;
   border-bottom: 1px solid;
 }
 
 h2 a {
-  color: #222;
+  color: #333;
 }
 
 /* Figures & other elements
@@ -140,7 +140,7 @@ h2 a {
 figcaption {
   line-height: 26px;
   line-height: 1.625rem;
-  color: #222;
+  color: #444;
   font-size: .8125rem;
   font-style: italic;
   margin-bottom: 0;
@@ -221,7 +221,7 @@ hr {
   margin-bottom: 52px;
   margin-bottom: 3.25rem;
   border: 0;
-  color: #222;
+  color: #444;
   display: block;
   height: 26px;
   height: 1.625rem;
@@ -229,7 +229,7 @@ hr {
   margin-left: auto;
   background-size: 100% 26px;
   background-size: 100% 1.625rem;
-  background-image: linear-gradient(to bottom, transparent 1px, transparent 11px, #222 11px, #222 15px, transparent 15px, transparent 26px);
+  background-image: linear-gradient(to bottom, transparent 1px, transparent 11px, #444 11px, #444 15px, transparent 15px, transparent 26px);
   width: 100px;
 }
 
@@ -438,7 +438,7 @@ code {
     height: 1.722222222222222rem;
     background-size: 100% 31px;
     background-size: 100% 1.722222222222222rem;
-    background-image: linear-gradient(to bottom, transparent 1px, transparent 13.5px, #222 13.5px, #222 17.5px, transparent 17.5px, transparent 31px);
+    background-image: linear-gradient(to bottom, transparent 1px, transparent 13.5px, #444 13.5px, #444 17.5px, transparent 17.5px, transparent 31px);
   }
 
   code {

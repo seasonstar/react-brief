@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/><title>undefined - Seasonstar&#x27; s Blog</title><link rel="shortcut icon" href="/images/favicon.png"/><link rel="stylesheet" href="/styles.css"/></head><body><div id="react-mount"><div class="wrapper" data-reactid=".2fvvwkhnitc" data-react-checksum="176929243"><div data-reactid=".2fvvwkhnitc.0"><div data-reactid=".2fvvwkhnitc.0.0"><div data-reactid=".2fvvwkhnitc.0.0.0"><a class="gohome" href="/" data-reactid=".2fvvwkhnitc.0.0.0.0">All Articles</a></div><div class="blog-single" data-reactid=".2fvvwkhnitc.0.0.1"><div class="text" data-reactid=".2fvvwkhnitc.0.0.1.0"><h1 data-reactid=".2fvvwkhnitc.0.0.1.0.0"></h1><div data-reactid=".2fvvwkhnitc.0.0.1.0.1"><p>… title: sinatpy的upload在sae上发送图片问题
+… slug: sinatpyde-uploadzai-saeshang-fa-song-tu-pian-wen-ti
+… date: 2013/03/01 02:02:52
+… tags: Python, SAE
+… link:
+… description:</p>
+<p>这两天在研究新浪云平台上用sinatpy提供的API发送图片微博出错的问题。今天，终于搞定了，我泪流满面。</p>
+<p>因为sae不支持本地文件读取，所以需要对上传的文件储存到sae的storage上 代码如下：</p>
+<p>… code-block:: python</p>
+<p>def handle_uploaded_file(f):
+s = sae.storage.Client()
+ob = sae.storage.Object(f.read())
+filename = f.name.decode(‘utf-8’)
+s.put(‘sysusecret’, filename, ob)
+return filename</p>
+<p>然后把返回的filename传入 <code>api.upload(filename,status)&lt;/code&gt;</code> 中</p>
+<p>主要对api.py里的 <code>_pack_image()</code> 函数作了修改。 将827到840的如下代码注释掉。</p>
+<p>… code-block:: python</p>
+<pre><code>&quot;&quot;&quot;
+try:
+if os.path.getsize(filename) &gt; (max_size * 1024):
+    raise WeibopError('File is too big, must be less than 700kb.')
+#except os.error, e:
+except os.error:
+    raise WeibopError('Unable to access file')
+
+# image must be gif, jpeg, or png
+file_type = mimetypes.guess_type(filename)
+if file_type is None:
+    raise WeibopError('Could not determine file type')
+file_type = file_type[0]
+if file_type not in ['image/gif', 'image/jpeg', 'image/png']:
+    raise WeibopError('Invalid file type for image: %s' % file_type)
+&quot;&quot;&quot;
+</code></pre>
+<p>再把843行的 <code>fp = open(filename, 'rb')</code> 和882行的 <code>fp.close</code> 注释掉.</p>
+<p>把879的 <code>body.append(fp.read())</code> 替换成 <code>body.append(ob.data)</code></p>
+<p>然后在 <code>_pack_image</code> 函数里添加以下代码：</p>
+<p>… code-block:: python</p>
+<pre><code>import sae.storage
+# image must be less than 700kb in size
+s = sae.storage.Client()
+ob_status = s.stat('sysusecret', filename)
+ob = s.get('sysusecret', filename)
+if ob_status['length'] &gt; (max_size * 1024):
+    raise WeibopError('File is too big, must be less than 700kb.')
+
+# image must be gif, jpeg, jpg, or png
+ft = ob_status['name'].rsplit('.', 1)[1]
+file_type = 'image/' + ft
+if file_type not in ['image/gif', 'image/jpeg', 'image/jpg', 'image/png']:
+    raise WeibopError('Invalid file type for image: %s' % file_type)
+</code></pre>
+<p>最后差不多完成，测试发送图片，却出现错误提示:</p>
+<pre><code>UnicodeDecodeError: 'ascii' codec can't decode byte 0xff in position 6: ordinal not in range(128)
+</code></pre>
+<p>尝试了下把body的各部分转换要转换成str， 在最后第几行的</p>
+<pre><code>body = 'rn'.join(body)
+</code></pre>
+<p>前面加上一句</p>
+<pre><code>body = [str(seg) for seg in body]
+</code></pre>
+<p>保存。测试，终于发送图片成功了。</p>
+</div><div class="date-published" data-reactid=".2fvvwkhnitc.0.0.1.0.2"><em data-reactid=".2fvvwkhnitc.0.0.1.0.2.0"><span data-reactid=".2fvvwkhnitc.0.0.1.0.2.0.0">Published </span><span data-reactid=".2fvvwkhnitc.0.0.1.0.2.0.1">13 Mar 2016</span></em></div></div><div class="footer" data-reactid=".2fvvwkhnitc.0.0.1.1"><noscript data-reactid=".2fvvwkhnitc.0.0.1.1.0"></noscript><hr data-reactid=".2fvvwkhnitc.0.0.1.1.1"/><p data-reactid=".2fvvwkhnitc.0.0.1.1.2"><span data-reactid=".2fvvwkhnitc.0.0.1.1.2.0">Love is life. And if you miss love, you miss life.</span><span data-reactid=".2fvvwkhnitc.0.0.1.1.2.1"> </span><br data-reactid=".2fvvwkhnitc.0.0.1.1.2.2"/><span data-reactid=".2fvvwkhnitc.0.0.1.1.2.3"> </span><strong data-reactid=".2fvvwkhnitc.0.0.1.1.2.4">Shawn Tang</strong></p></div></div></div></div></div></div><script src="/bundle.js"></script></body></html>

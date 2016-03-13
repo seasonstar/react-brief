@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/><title>undefined - Seasonstar&#x27; s Blog</title><link rel="shortcut icon" href="/images/favicon.png"/><link rel="stylesheet" href="/styles.css"/></head><body><div id="react-mount"><div class="wrapper" data-reactid=".2bief5mlszk" data-react-checksum="-214815665"><div data-reactid=".2bief5mlszk.0"><div data-reactid=".2bief5mlszk.0.0"><div data-reactid=".2bief5mlszk.0.0.0"><a class="gohome" href="/" data-reactid=".2bief5mlszk.0.0.0.0">All Articles</a></div><div class="blog-single" data-reactid=".2bief5mlszk.0.0.1"><div class="text" data-reactid=".2bief5mlszk.0.0.1.0"><h1 data-reactid=".2bief5mlszk.0.0.1.0.0"></h1><div data-reactid=".2bief5mlszk.0.0.1.0.1"><p>… title: theming
+… slug: theming
+… date: 2013/01/06 22:55:08
+… tags: screenshots, pyqt
+… link:
+… description:</p>
+<h1>Theming Nikola</h1>
+<p>:Version: 5
+:Author: Roberto Alsina <a href="mailto:ralsina@netmanagers.com.ar">ralsina@netmanagers.com.ar</a></p>
+<p>… class:: alert alert-info pull-right</p>
+<p>… contents::</p>
+<p>This document is a reference about themes. If you want a tutorial, please read
+<code>Creating a Theme &lt;creating-a-theme.html&gt;</code>_</p>
+<h2>The Structure</h2>
+<p>Themes are located in the <code>themes</code> folder where Nikola is installed, one folder per theme.
+The folder name is the theme name.</p>
+<p>A Nikola theme consists of three folders:</p>
+<p>assets
+This is where you would put your CSS, Javascript and image files. It will be copied
+into <code>output/assets</code> when you build the site, and the templates will contain
+references to them.</p>
+<pre><code>The included themes use `Bootstrap &lt;http://twitter.github.com/bootstrap/&gt;`_
+and `Colorbox &lt;http://www.jacklmoore.com/colorbox&gt;`_ so they are in assets,
+along with CSS files for syntax highligting and reStructuredText, and a
+minified copy of jQuery.
+
+If you want to base your theme on other frameworks (or on no framework at all)
+just remember to put there everything you need for deployment.
+</code></pre>
+<p>templates
+This contains the templates used to generate the pages. While Nikola will use a
+certain set of template names by default, you can add others for specific parts
+of your site.</p>
+<p>messages
+Nikola tries to be multilingual. This is where you put the strings for your theme
+so that it can be translated into other languages.</p>
+<p>And these optional files:</p>
+<p>parent
+A text file that, on its first line, contains the name of the <strong>parent theme</strong>.
+Any resources missing on this theme, will be looked up in the parent theme
+(and then in the grandparent, etc).</p>
+<pre><code>The ``parent`` is so you don't have to create a full theme each time: just create an
+empty theme, set the parent, and add the bits you want modified.
+</code></pre>
+<p>engine
+A text file which, on the first line, contains the name of the template engine
+this theme needs. Currently supported values are “mako” and “jinja”.
+If this file is not given, “mako” is assumed.</p>
+<p>bundles
+A text file containing a list of files to be turned into bundles using WebAssets.
+For example::</p>
+<pre><code>    assets/css/all.css=bootstrap.css,bootstrap-responsive.css,rst.css,code.css,colorbox.css,custom.css
+
+This creates a file called &quot;assets/css/all.css&quot; in your output that is the
+combination of all the other file paths, relative to the output file.
+This makes the page much more efficient because it avoids multiple connections to the server,
+at the cost of some extra difficult debugging.
+
+WebAssets supports bundling CSS and JS files.
+
+Templates should use either the bundle or the individual files based on the ``use_bundles``
+variable, which in turn is set by the ``USE_BUNDLES`` option.
+</code></pre>
+<h2>Templates</h2>
+<p>In templates there is a number of files whose name ends in <code>.tmpl</code>. Those are the
+theme’s page templates. They are done usig the <code>Mako &lt;http://makotemplates.org&gt;</code>_
+or <code>Jinja2 &lt;jinja.pocoo.org&gt;</code>_ template languages. If you want to do a theme, you
+should learn one first. What engine is used by the theme is declared in the <code>engine</code> file.</p>
+<p>The rest of this document explains Mako templates, but Jinja2 is fairly similar.</p>
+<p>Mako has a nifty concept of template inheritance. That means that, a
+template can inherit from another and only change small bits of the output. For example,
+<code>base.tmpl</code> defines the whole layout for a page but has only a placeholder for content
+so <code>post.tmpl</code> only define the content, and the layout is inherited from <code>base.tmpl</code>.</p>
+<p>These are the templates that come with the included themes:</p>
+<p>base.tmpl
+This template defines the basic page layout for the site. It’s mostly plain HTML
+but defines a few blocks that can be re-defined by inheriting templates:</p>
+<pre><code>* ``extra_head`` is a block that is added before ``&lt;/head&gt;``, (ex: for adding extra CSS)
+* ``belowtitle`` is used by default to display a list of translations but you can put
+  anything there.
+* ``content`` is where the inheriting templates will place the main content of the page.
+* ``permalink`` is an absolute path to the page (ex: &quot;/archive/index.html&quot;)
+
+This template always receives the following variables you can use:
+
+* ``lang`` is the laguage for this page.
+* ``title`` is the page's title.
+* ``description`` is the page's description.
+* ``blog_title`` is the blog's title.
+* ``blog_author`` is the blog's author.
+* ``messages`` contains the theme's strings and translations.
+* ``_link`` is an utility function to create links to other pages in the site.
+  It takes three arguments, kind, name, lang:
+
+  kind is one of:
+
+  * tag_index (name is ignored)
+  * tag (and name is the tag name)
+  * tag_rss (name is the tag name)
+  * archive (and name is the year, or None for the main archive index)
+  * index (name is the number in index-number)
+  * rss (name is ignored)
+  * gallery (name is the gallery name)
+
+  The returned value is always an absolute path, like &quot;/archive/index.html&quot;.
+
+* ``rel_link`` converts absolute paths to relative ones. You can use it with
+  ``_link`` and ``permalink`` to create relative links, which makes the site
+  able to work when moved inside the server. Example: ``rel_link(permalink, url)``
+
+* Anything you put in your ``GLOBAL_CONTEXT`` option in ``dodo.py``. This
+  usually includes ``sidebar_links``, ``search_form``, and others.
+
+  The included themes use at least these:
+
+  * ``rss_link`` a link to custom RSS feed, although it may be empty)
+  * ``blog_url`` the URL for your site
+  * ``blog_title`` the name of your site
+  * ``content_footer`` things like copyright notices, disclaimers, etc.
+  * ``license`` a larger license badge
+  * ``analytics`` google scripts, or any JS you want to tack at the end of the body
+    of the page.
+  * ``disqus_forum``: a `Disqus &lt;http://disqus.com&gt;`_ ID you can use to enable comments.
+
+It's probably a bad idea to do a theme that *requires* more than this (please put
+a ``README`` in it saying what the user should add in its ``dodo.py``), but there is no
+problem in requiring less.
+</code></pre>
+<p>post.tmpl
+Template used for blog posts. Can use everything <code>base.tmpl</code> uses, plus:</p>
+<pre><code>* ``post``: a Post object. This has a number of members:
+
+  * ``post.title(language)``: returns a localized title
+  * ``post.date``
+  * ``post.tags``: A list of tags
+  * ``post.text(language)``: the translated text of the post
+  * ``post.permalink(language, absolute)``: Link to the post in that language.
+    If ``absolute`` is ``True`` the link contains the full URL. This is useful
+    for things like Disqus comment forms.
+  * ``post.next_post`` is None or a Post object that is next newest in the timeline.
+  * ``post.prev_post`` is None or a Post object that is next oldest in the timeline.
+</code></pre>
+<p>story.tmpl
+Used for pages that are not part of a blog, usually a cleaner, less
+intrusive layout than <code>post.tmpl</code>, but same parameters.</p>
+<p>gallery.tmpl
+Template used for image galleries. Can use everything <code>base.tmpl</code> uses, plus:</p>
+<pre><code>* ``text``: A descriptive text for the gallery.
+* ``images``: A list of (thumbnail, image) paths.
+</code></pre>
+<p>index.tmpl
+Template used to render the multipost indexes. Can use everything <code>base.tmpl</code> uses, plus:</p>
+<pre><code>* ``posts``: a list of Post objects, as described above.
+* ``prevlink``: a link to a previous page
+* ``nextlink``: a link to the next page
+</code></pre>
+<p>list.tmpl
+Template used to display generic lists of links. Can use everything <code>base.tmpl</code> uses, plus:</p>
+<pre><code>* ``items``: a list of (text, link) elements.
+</code></pre>
+<p>list_post.tmpl
+Template used to display generic lists of links. Can use everything <code>base.tmpl</code> uses, plus:</p>
+<pre><code>* ``posts``: a list of Post objects.
+</code></pre>
+<p>You can add other templates for specific pages, which the user can the use in his <code>post_pages</code>
+option in <code>dodo.py</code>. Also, keep in mind that your theme is yours, there is no reason why
+you would need to maintain the inheritance as it is, or not require whatever data you want.</p>
+<h2>Messages and Translations</h2>
+<p>When you modify templates, you may want to add text in them (for example: “About Me”).
+Instead of adding the text directly, which makes it impossible to translate to other
+languages, add it like this::</p>
+<pre><code>${messages[lang][&quot;About Me&quot;]}
+</code></pre>
+<p>Then, in <code>messages/en.py</code> add it along the other strings::</p>
+<pre><code>MESSAGES = [
+    u&quot;Posts for year %s&quot;,
+    u&quot;Archive&quot;,
+    u&quot;Posts about %s:&quot;,
+    u&quot;Tags&quot;,
+    u&quot;Also available in: &quot;,
+    u&quot;More posts about&quot;,
+    u&quot;Posted:&quot;,
+    u&quot;Original site&quot;,
+    u&quot;Read in english&quot;,
+    u&quot;About Me&quot;,
+]
+</code></pre>
+<p>Then, when I want to use your theme in spanish, all I have to do is add a line in <code>messages/es.py</code>::</p>
+<pre><code>MESSAGES = {
+    u&quot;LANGUAGE&quot;: u&quot;Español&quot;,
+    u&quot;Posts for year %s&quot;: u&quot;Posts del año %s&quot;,
+    u&quot;Archive&quot;: u&quot;Archivo&quot;,
+    u&quot;Posts about %s:&quot;: u&quot;Posts sobre %s&quot;,
+    u&quot;Tags&quot;: u&quot;Tags&quot;,
+    u&quot;Also available in: &quot;: u&quot;También disponible en: &quot;,
+    u&quot;More posts about&quot;: u&quot;Más posts sobre&quot;,
+    u&quot;Posted:&quot;: u&quot;Publicado:&quot;,
+    u&quot;Original site&quot;: u&quot;Sitio original&quot;,
+    u&quot;Read in english&quot;: u&quot;Leer en español&quot;,
+    u&quot;About Me&quot;: u&quot;Acerca del autor&quot;,
+}
+</code></pre>
+<p>And voilá, your theme works in spanish. Don’t remove strings from these files even if it seems
+your theme is not using them. Some are used internally in Nikola to generate titles and
+similar things.</p>
+<p>To create a new translation, just copy one of the existing ones, translate the right side of
+every string to your language, save it and send it to me, I will add it to Nikola!</p>
+</div><div class="date-published" data-reactid=".2bief5mlszk.0.0.1.0.2"><em data-reactid=".2bief5mlszk.0.0.1.0.2.0"><span data-reactid=".2bief5mlszk.0.0.1.0.2.0.0">Published </span><span data-reactid=".2bief5mlszk.0.0.1.0.2.0.1">13 Mar 2016</span></em></div></div><div class="footer" data-reactid=".2bief5mlszk.0.0.1.1"><noscript data-reactid=".2bief5mlszk.0.0.1.1.0"></noscript><hr data-reactid=".2bief5mlszk.0.0.1.1.1"/><p data-reactid=".2bief5mlszk.0.0.1.1.2"><span data-reactid=".2bief5mlszk.0.0.1.1.2.0">Love is life. And if you miss love, you miss life.</span><span data-reactid=".2bief5mlszk.0.0.1.1.2.1"> </span><br data-reactid=".2bief5mlszk.0.0.1.1.2.2"/><span data-reactid=".2bief5mlszk.0.0.1.1.2.3"> </span><strong data-reactid=".2bief5mlszk.0.0.1.1.2.4">Shawn Tang</strong></p></div></div></div></div></div></div><script src="/bundle.js"></script></body></html>

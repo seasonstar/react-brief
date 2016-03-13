@@ -1,14 +1,13 @@
 
-siteTitle = "Blog by John Doe"
-siteDescr = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+siteTitle = "Seasonstar' s Blog"
+siteDescr = "Love is life. And if you miss love, you miss life."
 
-authorName = "John Doe"
+authorName = "Shawn Tang"
 
-linkTelegram = "telegram:wpioneer"
-linkTwitter  = "https://twitter.com/truewpioneer"
-linkGithub 	 = "https://github.com/wpioneer"
-linkEmail 	 = "a.shelepenok@gmail.com"
+linkTwitter  = "https://twitter.com/seasonskyr"
+linkGithub 	 = "https://github.com/seasonstar"
+linkWeibo 	 = "http://weibo.com/234323550"
+linkEmail 	 = "seasonstar@126.com"
 linkRss 	 = "/feed.xml"
-linkVk 		 = "https://vk.com/wpioneer"
 
-linkPrefix = "/gatsby-starters-kit/lumen"
+linkPrefix = "/react-brief/blog"

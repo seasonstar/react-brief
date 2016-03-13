@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/><title>undefined - Seasonstar&#x27; s Blog</title><link rel="shortcut icon" href="/images/favicon.png"/><link rel="stylesheet" href="/styles.css"/></head><body><div id="react-mount"><div class="wrapper" data-reactid=".lx4m9emjuo" data-react-checksum="-443222517"><div data-reactid=".lx4m9emjuo.0"><div data-reactid=".lx4m9emjuo.0.0"><div data-reactid=".lx4m9emjuo.0.0.0"><a class="gohome" href="/" data-reactid=".lx4m9emjuo.0.0.0.0">All Articles</a></div><div class="blog-single" data-reactid=".lx4m9emjuo.0.0.1"><div class="text" data-reactid=".lx4m9emjuo.0.0.1.0"><h1 data-reactid=".lx4m9emjuo.0.0.1.0.0"></h1><div data-reactid=".lx4m9emjuo.0.0.1.0.1"><p>… title: Ubuntu下使用mentohust上网问题
+… slug: ubuntuxia-shi-yong-mentohustshang-wang-wen-ti
+… date: 2013/03/01 00:54:55
+… tags: Ubuntu
+… link:
+… description:</p>
+<p>认证时总提示“把网卡设置为自动获取IP地址” 然后把上网查找资料。操作如下： 在终端输入命令:</p>
+<pre><code>sudo gedit /etc/networking/interfaces
+</code></pre>
+<p>加入下面几行代码::</p>
+<pre><code>auto eth0  
+iface eth0 inet dhcp
+</code></pre>
+<p>保存，然后终端下再输入以下代码:</p>
+<pre><code>sudo /etc/init.d/networking restart
+</code></pre>
+<p>如果提示 <code>failed to restart network</code> 的话，直接重启电脑就行了。</p>
+<p>如果还是没法通过认证，可以参考下我的配置：</p>
+<p>终端下输入下面命令查看:</p>
+<pre><code>sudo gedit /etc/mentohust.conf
+</code></pre>
+<p>::</p>
+<pre><code>[MentoHUST]
+MaxFail=8
+;用户名，长度不超过64
+Username=20103100xxxx
+;密码
+Password= ********
+;网卡
+Nic=eth0
+;静态IP用户可以使用非本机IP
+IP=192.168.1.43
+;掩码，无关紧要
+Mask=255.255.255.0
+;网关，如果指定了就会监视网关ARP信息
+Gateway=0.0.0.0
+;DNS服务器，无关紧要
+DNS=0.0.0.0
+;Ping主机，用于掉线检测，0.0.0.0表示关闭该功能
+PingHost=0.0.0.0
+;每次发包超时时间（秒）
+Timeout=8
+;发送Echo包的间隔（秒）
+EchoInterval=30
+;失败等待（秒）认证失败后等待RestartWait秒或者服务器请求后重启认证
+RestartWait=15
+;寻找服务器时的组播地址类型 0标准 1锐捷 2将MentoHUST用于赛尔认证
+StartMode=1
+;DHCP方式 0(不使用) 1(二次认证) 2(认证后) 3(认证前)
+DhcpMode=3
+;是否后台运行: 0(否) 1(是，关闭输出) 2(是，保留输出) 3(是，输出到文件/tmp/mentohust.log)
+DaemonMode=0
+;是否显示通知： 0(否) 1~20(是)
+ShowNotify=5
+;客户端版本号，如果未开启客户端校验但对版本号有要求，可以在此指定，形如3.30
+Version=3.95
+;认证数据文件，如果需要校验客户端，就需要正确设置
+DataFile=/etc/mentohust/
+;进行DHCP的脚本
+DhcpScript=dhclient
+</code></pre>
+<p>如果各位同学什么问题可以再联系我～</p>
+<p>Write your post here.</p>
+</div><div class="date-published" data-reactid=".lx4m9emjuo.0.0.1.0.2"><em data-reactid=".lx4m9emjuo.0.0.1.0.2.0"><span data-reactid=".lx4m9emjuo.0.0.1.0.2.0.0">Published </span><span data-reactid=".lx4m9emjuo.0.0.1.0.2.0.1">13 Mar 2016</span></em></div></div><div class="footer" data-reactid=".lx4m9emjuo.0.0.1.1"><noscript data-reactid=".lx4m9emjuo.0.0.1.1.0"></noscript><hr data-reactid=".lx4m9emjuo.0.0.1.1.1"/><p data-reactid=".lx4m9emjuo.0.0.1.1.2"><span data-reactid=".lx4m9emjuo.0.0.1.1.2.0">Love is life. And if you miss love, you miss life.</span><span data-reactid=".lx4m9emjuo.0.0.1.1.2.1"> </span><br data-reactid=".lx4m9emjuo.0.0.1.1.2.2"/><span data-reactid=".lx4m9emjuo.0.0.1.1.2.3"> </span><strong data-reactid=".lx4m9emjuo.0.0.1.1.2.4">Shawn Tang</strong></p></div></div></div></div></div></div><script src="/bundle.js"></script></body></html>

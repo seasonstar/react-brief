@@ -41,7 +41,7 @@ class BlogPost extends React.Component {
               <ReadNext post={post} {...this.props}/>
               <hr></hr>
               <p>
-                {config.siteDescr} <a href={config.twitter}><br></br> <strong>{config.authorName}</strong> on Twitter</a>
+                {config.siteDescr} <br></br> <strong>{config.authorName}</strong>
               </p>
             </div>
           </div>

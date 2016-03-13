@@ -22,9 +22,9 @@ class SidebarLeft extends React.Component {
           to={link('/')}
         >
           <img
-            src='./images/photo9.jpg'
-            width='75'
-            height='75'
+            src='./images/guitar_me.jpg'
+            width='200'
+            height='200'
           />
         </Link>
 
