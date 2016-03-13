@@ -14,10 +14,10 @@ class BlogNav extends React.Component {
             <Link to="/" className={location.pathname === link('/')?"current":null}>Articles</Link>
           </li>
           <li>
-            <Link to="/about" className={location.pathname === link('/about')?"current":null}>About me</Link>
+            <Link to="/about" className={location.pathname === link('/about')?"current":null}>About</Link>
           </li>
           <li>
-            <Link to="/contact" className={location.pathname === link('/contact')?"current":null}>Contact me</Link>
+            <Link to="/contact" className={location.pathname === link('/contact')?"current":null}>Works</Link>
           </li>
         </ul>
       </nav>

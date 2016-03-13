@@ -1,9 +1,15 @@
-.. title: sinatpy的upload在sae上发送图片问题
-.. slug: sinatpyde-uploadzai-saeshang-fa-song-tu-pian-wen-ti
-.. date: 2013/03/01 02:02:52
-.. tags: Python, SAE
-.. link: 
-.. description: 
+---
+title: sinatpy的upload在sae上发送图片问题
+date: "2013-04-02T15:02Z"
+layout: post
+path: "/sinatpyde-uploadzai-saeshang-fa-song-tu-pian-wen-ti/"
+category: "Python"
+description: "
+这两天在研究新浪云平台上用sinatpy提供的API发送图片微博出错的问题。今天，终于搞定了，我泪流满面。
+
+因为sae不支持本地文件读取，所以需要对上传的文件储存到sae的storage上 代码如下："
+
+---
 
 这两天在研究新浪云平台上用sinatpy提供的API发送图片微博出错的问题。今天，终于搞定了，我泪流满面。
 
@@ -43,7 +49,7 @@
 
 再把843行的 ``fp = open(filename, 'rb')`` 和882行的 ``fp.close`` 注释掉.
 
-把879的 ``body.append(fp.read())`` 替换成 ``body.append(ob.data)`` 
+把879的 ``body.append(fp.read())`` 替换成 ``body.append(ob.data)``
 
 然后在 ``_pack_image`` 函数里添加以下代码：
 
@@ -76,5 +82,3 @@
     body = [str(seg) for seg in body]
 
 保存。测试，终于发送图片成功了。
-
-

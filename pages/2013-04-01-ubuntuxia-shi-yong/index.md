@@ -1,9 +1,22 @@
-.. title: Ubuntu下使用mentohust上网问题
-.. slug: ubuntuxia-shi-yong-mentohustshang-wang-wen-ti
-.. date: 2013/03/01 00:54:55
-.. tags: Ubuntu
-.. link: 
-.. description: 
+---
+title: Ubuntu下使用mentohust上网问题
+date: "2013-04-02T15:02Z"
+layout: post
+path: "/ubuntuxia-shi-yong-mentohustshang-wang-wen-ti/"
+category: "Linux"
+description: "认证时总提示“把网卡设置为自动获取IP地址” 然后把上网查找资料。操作如下： 在终端输入命令:
+
+    sudo gedit /etc/networking/interfaces
+
+加入下面几行代码::
+
+    auto eth0
+    iface eth0 inet dhcp
+
+
+保存，然后终端下再输入以下代码:"
+
+---
 
 认证时总提示“把网卡设置为自动获取IP地址” 然后把上网查找资料。操作如下： 在终端输入命令:
 
@@ -11,7 +24,7 @@
 
 加入下面几行代码::
 
-    auto eth0  
+    auto eth0
     iface eth0 inet dhcp
 
 
@@ -69,7 +82,3 @@
     DhcpScript=dhclient
 
 如果各位同学什么问题可以再联系我～
-
-
-
-Write your post here.

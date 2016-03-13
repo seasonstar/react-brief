@@ -1,9 +1,11 @@
-.. title: Failures and benefits of ERP
-.. slug: failures-and-benefits-of-erp
-.. date: 2013/03/16 15:01:25
-.. tags: MIS
-.. link: 
-.. description: 
+---
+title: Failures and benefits of ERP
+date: "2013-03-17T15:02Z"
+layout: post
+path: "/failures-and-benefits-of-erp/"
+category: "论文"
+description: "Efforts to automate and improve business processes have been undertaken for over half a century. Enterprise resource planning (ERP) emerged as a solution in the late 1990s. The purpose of ERP is to integrate all business functions and to facilitate the flow of information under a suite of software applications."
+---
 
 Efforts to automate and improve business processes have been undertaken for over half a century. Enterprise resource planning (ERP) emerged as a solution in the late 1990s. The purpose of ERP is to integrate all business functions and to facilitate the flow of information under a suite of software applications. Wiki provides a generalized definition of “ERP” as “Enterprise resource planning (ERP) systems integrate internal and external management of information across an entire organization – embracing finance/accounting, manufacturing, sales and service, customer relationship management, etc.” Some of the well-known ERP vendors include SAP, Oracle and Epicor.
 
@@ -26,5 +28,3 @@ Secondly, many organizations fail to dedicate sufficient resources to an ERP imp
 Thirdly, there is employee’s resistance to change. An ERP’s one-size-fits-all functionality often brings many company operations to a halt, or create creates additional burdens, thereby losing effectiveness and employee confidence. At Purina Mills, the company contracted with a third party consultant to conduct the training, but users complained almost immediately that they needed a translator to help them understand the training. Finally, they fired the third party trainers and developed the training course internally.
 
 In conclusion, there are as many benefits of ERP implementations as there as many causes of failed projects. Performance measures must be developed and standardized to give organizations a clearer picture of the benefits derived from Enterprise Resource Planning implementation.
-
-

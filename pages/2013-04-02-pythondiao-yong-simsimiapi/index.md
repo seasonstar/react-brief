@@ -1,11 +1,14 @@
-.. title: Python调用simsimi api应用到新浪上
-.. slug: pythondiao-yong-simsimiapiying-yong-dao-xin-lang-shang
-.. date: 2013/03/01 02:48:45
-.. tags: Python, SAE
-.. link: 
-.. description: 
+---
+title: Python调用simsimi api应用到新浪上
+date: "2013-04-02T15:02Z"
+layout: post
+path: "/pythondiao-yong-simsimiapiying-yong-dao-xin-lang-shang/"
+category: "Python"
+description: "urllib2是个非常好用的http客户端库，但是用来写爬虫可能会遇到一些问题，一是连续请求某一网站的时候，cookie需要手动添加到HTTP请求头里，二是手动处理Referer页。这里贴一段代码，可以自动处理Cookie和Referer问题。每一个请求会自动添加上一次的cookie和referer。"
 
-参考了一个技术 `给urllib2添加自动Referer, Cookie处理功能 
+---
+
+参考了一个技术 `给urllib2添加自动Referer, Cookie处理功能
 <http://initiative.yo2.cn/archives/624154/>`_.
 原话::
 
@@ -17,20 +20,20 @@ Python代码:
 
     class HTTPRefererProcessor(urllib2.BaseHandler):
         def __init__(self):
-            self.referer = None 
+            self.referer = None
 
         def http_request(self, request):
             if ((self.referer is not None) and
                 not request.has_header("Referer")):
                 request.add_unredirected_header("Referer", self.referer)
-            return request 
+            return request
 
         def http_response(self, request, response):
             self.referer = response.geturl()
-            return response 
+            return response
 
         https_request = http_request
-        https_response = http_response 
+        https_response = http_response
 
     def main():
         cj = CookieJar()
@@ -38,7 +41,7 @@ Python代码:
             urllib2.HTTPCookieProcessor(cj),
             HTTPRefererProcessor(),
         )
-        urllib2.install_opener(opener) 
+        urllib2.install_opener(opener)
 
         urllib2.urlopen(url1)  #打开第一个网址
         urllib2.urlopen(url2)  #打开第二个网址
@@ -54,7 +57,7 @@ Python代码:
 不说了，我直接贴出基于Django在Baidu云平台下运行的代码:
 
 
-.. code-block:: python 
+.. code-block:: python
 
     #-*- coding:utf-8 -*-
     from django.utils import simplejson
@@ -82,37 +85,37 @@ Python代码:
 
     class HTTPRefererProcessor(urllib2.BaseHandler):
         def __init__(self):
-            self.referer = None 
+            self.referer = None
 
 
         def http_request(self, request):
             if ((self.referer is not None) and
                 not request.has_header("Referer")):
                 request.add_unredirected_header("Referer", self.referer)
-            return request 
+            return request
 
 
         def http_response(self, request, response):
             self.referer = response.geturl()
-            return response 
+            return response
 
 
         https_request = http_request
-        https_response = http_response 
+        https_response = http_response
 
     def response(request, cont=None, interface=1):
         if cont:
             url2 = 'http://api.simsimi.com/request.p?key=%s&lc=ch&ft=1.0&text=%s' % cont[14:] % SIMSIMI_KEY
             try:
-                req = urllib2.Request(url2.encode('utf-8')) 
-                response = urllib2.urlopen(req)  
+                req = urllib2.Request(url2.encode('utf-8'))
+                response = urllib2.urlopen(req)
                 html = response.read()
                 x = load(StringIO(html))
                 if interface is 1:
                     return HttpResponse(x['response'], mimetype="application/json")
                 else:
                     return x['response']
-            except HTTPError, e:    
+            except HTTPError, e:
                 return HttpResponse('Something wrong!', mimetype="application/json")
         else:
             return HttpResponse("你说啥？", mimetype="application/json")
@@ -134,7 +137,7 @@ Python代码:
         client = _api()
         auth_url =client.get_authorize_url()
         #request.session['redirect_uri'] = _get_referer_url(request)
-       
+
         return HttpResponseRedirect(auth_url)
 
     def log_check(request):
@@ -142,9 +145,9 @@ Python代码:
         verifier = request.GET.get('code', None)
         client = _api()
         r = client.request_access_token(verifier)
-        access_token = r.access_token 
+        access_token = r.access_token
         expires_in = r.expires_in
-        
+
         request.session.set_expiry(604800)
         request.session['access_token'] = access_token
         request.session['expires_in'] = expires_in
@@ -162,7 +165,7 @@ Python代码:
         except KeyError:
             return HttpResponse("此帐号木有access_token, 请重新登录")
         auth.set_access_token(access_token, expires_in)
-        return auth 
+        return auth
 
     def get_unread(request):
         api = get_auth(request)
@@ -180,7 +183,7 @@ Python代码:
 
     def get_comment(request):
         api = get_auth(request)
-        comment = api.get.comments__to_me(count=2)    
+        comment = api.get.comments__to_me(count=2)
         return comment.comments[0]
         #return HttpResponse(comment.comments[0].text)
 
@@ -200,7 +203,7 @@ Python代码:
                 return HttpResponse("发评论出错", mimetype="application/json")
         else:
             tip = str(unread['status']) + tip + "没新微博"
-            
+
         if unread['comment']:
             comment = get_comment(request)
             text = comment['text']
