@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { RouteHandler, Link } from 'react-router'
-import DocumentTitle from 'react-document-title'
+import ReactDisqusThread from 'react-disqus-thread'
 import { link } from 'gatsby-helpers'
 import access from 'safe-access'
 import ReadNext from '../ReadNext'
@@ -13,8 +13,10 @@ import '../../static/css/highlight.css'
 
 class BlogPost extends React.Component {
   render() {
+
     const { route } = this.props
     const post = route.page.data
+    const url = "http://season.im" + route.page.path
     const home = (
       <div>
         <Link
@@ -43,6 +45,10 @@ class BlogPost extends React.Component {
               <p>
                 {config.siteDescr} <br></br> <strong>{config.authorName}</strong>
               </p>
+              <ReactDisqusThread
+                shortname="seasonstar"
+                title={post.title}
+                url={url} />
             </div>
           </div>
         </div>
