@@ -1,9 +1,15 @@
 .sidebar
   lost-column: 3/10
+  position: fixed
+  top: 0
+  left: 0
+  bottom: 0
 
 .sidebar .sidebar-inner
   position: relative
   padding: 40px
+  text-align: center
+  display: block
 
 .sidebar .sidebar-inner:after
   background: #eee
@@ -53,6 +59,7 @@
 @media (max-width: 500px)
   .sidebar
     lost-column: 4/4
+    display: none
   .sidebar .sidebar-inner
     padding: 25px 20px 0
   .sidebar .sidebar-inner:after

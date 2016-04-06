@@ -62,6 +62,16 @@ class BlogIndex extends React.Component {
           <SidebarLeft {...this.props}/>
           <div className='content'>
             <div className='main'>
+              <div className="main-header">
+                <img
+                  src='./images/guitar_me.jpg'
+                  width='50'
+                  height='50'
+                />
+                <p>
+                  {config.siteDescr}
+                </p>
+              </div>
               <div className='main-inner'>
                 {pageLinks}
               </div>
