@@ -26,7 +26,7 @@ class BlogIndex extends React.Component {
 
         pageLinks.push(
           <div className='blog-post'>
-            <time dateTime={moment(datePublished).format('MMMM D, YYYY')}>{moment(datePublished).format('MMMM YYYY')}</time>
+            <time dateTime={moment(datePublished).format('MMMM D, YYYY')}>{moment(datePublished).format('MMMM D YYYY')}</time>
             <span
               style={{
                 padding: '5px'
@@ -38,7 +38,7 @@ class BlogIndex extends React.Component {
               <Link
                 style={{
                   borderBottom: 'none',
-                }} 
+                }}
                 to={link(page.path)}
               >
                 {title}
