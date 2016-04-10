@@ -10,4 +10,4 @@ linkWeibo 	 = "http://weibo.com/234323550"
 linkEmail 	 = "seasonstar@126.com"
 linkRss 	 = "/feed.xml"
 
-linkPrefix = "/react-brief/blog"
+linkPrefix = "/react-brief"
