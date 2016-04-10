@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/><title>Python调用simsimi api应用到新浪上 - Blog by Seasonstar</title><link rel="shortcut icon" href="/images/favicon.png"/><link rel="stylesheet" href="/react-brief/blog/styles.css"/></head><body><div id="react-mount"><div class="wrapper" data-reactid=".25tsyol8u80" data-react-checksum="1701965567"><div data-reactid=".25tsyol8u80.0"><div data-reactid=".25tsyol8u80.0.0"><div data-reactid=".25tsyol8u80.0.0.0"><a class="gohome" href="/react-brief/blog/" data-reactid=".25tsyol8u80.0.0.0.0">All Articles</a></div><div class="blog-single" data-reactid=".25tsyol8u80.0.0.1"><div class="text" data-reactid=".25tsyol8u80.0.0.1.0"><h1 data-reactid=".25tsyol8u80.0.0.1.0.0">Python调用simsimi api应用到新浪上</h1><div data-reactid=".25tsyol8u80.0.0.1.0.1"><p>参考了一个技术 <code>给urllib2添加自动Referer, Cookie处理功能 &lt;http://initiative.yo2.cn/archives/624154/&gt;</code>_.
+原话::</p>
+<pre><code>urllib2是个非常好用的http客户端库，但是用来写爬虫可能会遇到一些问题，一是连续请求某一网站的时候，cookie需要手动添加到HTTP请求头里，二是手动处理Referer页。这里贴一段代码，可以自动处理Cookie和Referer问题。每一个请求会自动添加上一次的cookie和referer。
+</code></pre>
+<p>Python代码:</p>
+<p>… code:: python</p>
+<pre><code>class HTTPRefererProcessor(urllib2.BaseHandler):
+    def __init__(self):
+        self.referer = None
+
+    def http_request(self, request):
+        if ((self.referer is not None) and
+            not request.has_header(&quot;Referer&quot;)):
+            request.add_unredirected_header(&quot;Referer&quot;, self.referer)
+        return request
+
+    def http_response(self, request, response):
+        self.referer = response.geturl()
+        return response
+
+    https_request = http_request
+    https_response = http_response
+
+def main():
+    cj = CookieJar()
+    opener = urllib2.build_opener(
+        urllib2.HTTPCookieProcessor(cj),
+        HTTPRefererProcessor(),
+    )
+    urllib2.install_opener(opener)
+
+    urllib2.urlopen(url1)  #打开第一个网址
+    urllib2.urlopen(url2)  #打开第二个网址
+
+if &quot;__main__&quot; == __name__:
+    main()
+</code></pre>
+<p>在前段时间调用simsimi接口需要用到这个思想。但现在不用了。
+现在的方法很直接，就是去http://developer.simsimi.com/ 申请接口KEY
+然后使用它就是了</p>
+<p>我做了个程序用于定时评论所关注的人的新微博，还有回复评论。
+不说了，我直接贴出基于Django在Baidu云平台下运行的代码:</p>
+<p>… code-block:: python</p>
+<pre><code>#-*- coding:utf-8 -*-
+from django.utils import simplejson
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from datetime import date, datetime
+from twentyfourtime.weibo import APIClient, APIError
+
+from urllib2 import HTTPError, build_opener, install_opener, HTTPCookieProcessor
+from urllib import quote, quote_plus
+from StringIO import StringIO
+from json import load
+import cookielib, urllib2
+import weibo
+
+APP_KEY = getattr(settings, 'APP_KEY')
+APP_SECRET = getattr(settings, 'APP_SECRET')
+CALLBACK_URL = 'http://24time.duapp.com/api/callback'
+
+#请到http://developer.simsimi.com/ 申请SIMSIMI_KEY
+SIMSIMI_KEY = '***********'
+
+
+
+class HTTPRefererProcessor(urllib2.BaseHandler):
+    def __init__(self):
+        self.referer = None
+
+
+    def http_request(self, request):
+        if ((self.referer is not None) and
+            not request.has_header(&quot;Referer&quot;)):
+            request.add_unredirected_header(&quot;Referer&quot;, self.referer)
+        return request
+
+
+    def http_response(self, request, response):
+        self.referer = response.geturl()
+        return response
+
+
+    https_request = http_request
+    https_response = http_response
+
+def response(request, cont=None, interface=1):
+    if cont:
+        url2 = 'http://api.simsimi.com/request.p?key=%s&amp;lc=ch&amp;ft=1.0&amp;text=%s' % cont[14:] % SIMSIMI_KEY
+        try:
+            req = urllib2.Request(url2.encode('utf-8'))
+            response = urllib2.urlopen(req)
+            html = response.read()
+            x = load(StringIO(html))
+            if interface is 1:
+                return HttpResponse(x['response'], mimetype=&quot;application/json&quot;)
+            else:
+                return x['response']
+        except HTTPError, e:
+            return HttpResponse('Something wrong!', mimetype=&quot;application/json&quot;)
+    else:
+        return HttpResponse(&quot;你说啥？&quot;, mimetype=&quot;application/json&quot;)
+
+
+
+def _api():
+    client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
+    return client
+
+def _get_referer_url(request):
+    referer_url = request.META.get('HTTP_REFERER', '/')
+    host = request.META['HTTP_HOST']
+    if referer_url.startswith('http') and host not in referer_url:
+        referer_url = '/'
+    return referer_url
+
+def log(request):
+    client = _api()
+    auth_url =client.get_authorize_url()
+    #request.session['redirect_uri'] = _get_referer_url(request)
+
+    return HttpResponseRedirect(auth_url)
+
+def log_check(request):
+
+    verifier = request.GET.get('code', None)
+    client = _api()
+    r = client.request_access_token(verifier)
+    access_token = r.access_token
+    expires_in = r.expires_in
+
+    request.session.set_expiry(604800)
+    request.session['access_token'] = access_token
+    request.session['expires_in'] = expires_in
+
+    #back_to_url = request.session['redirect_uri']
+    #del request.session['redirect_uri']
+
+    return HttpResponse(str(access_token) + str('ff')+ str(expires_in))
+
+def get_auth(request):
+    auth = _api()
+    try:
+        access_token = '2.00WzGSoBmERypCb05fa68e652zullD'
+        expires_in = 1359658801
+    except KeyError:
+        return HttpResponse(&quot;此帐号木有access_token, 请重新登录&quot;)
+    auth.set_access_token(access_token, expires_in)
+    return auth
+
+def get_unread(request):
+    api = get_auth(request)
+    remind = api.remind.unread_count.get(uid=1659266414)
+    unread = {}
+    unread['status'] = remind['status']
+    unread['comment'] = remind['cmt']
+    return unread
+
+def get_status(request):
+    api = get_auth(request)
+    status = api.statuses.home_timeline.get(count=2)
+    return status.statuses[0]
+    #return HttpResponse(status.statuses[0])
+
+def get_comment(request):
+    api = get_auth(request)
+    comment = api.get.comments__to_me(count=2)
+    return comment.comments[0]
+    #return HttpResponse(comment.comments[0].text)
+
+
+def get_update(request):
+    unread = get_unread(request)
+    api = get_auth(request)
+    tip = &quot;恩。。&quot;
+    if unread['status']:
+        status = get_status(request)
+        text = status['text']
+        reply = response(request, text, interface=2)
+        try:
+            api.comments.create.post(id=status.id, comment=reply)
+            #api.remind.set_count.post(type=status)
+        except APIError:
+            return HttpResponse(&quot;发评论出错&quot;, mimetype=&quot;application/json&quot;)
+    else:
+        tip = str(unread['status']) + tip + &quot;没新微博&quot;
+
+    if unread['comment']:
+        comment = get_comment(request)
+        text = comment['text']
+        reply = response(request, text, interface=2)
+        try:
+            api.comments.reply.post(cid=comment.id,id=comment.status.id, comment=reply)
+            #api.remind.set_count.post(type=cmt)
+        except APIError:
+            return HttpResponse(&quot;回复评论出错&quot;, mimetype=&quot;application/json&quot;)
+    else:
+        tip = tip + &quot;没新评论&quot;
+    tip = str(unread['comment']) + tip + &quot;完成&quot;
+    return HttpResponse(tip, mimetype=&quot;application/json&quot;)
+</code></pre>
+<p>有什么问题可以一起讨论下:)</p>
+</div><div class="date-published" data-reactid=".25tsyol8u80.0.0.1.0.2"><em data-reactid=".25tsyol8u80.0.0.1.0.2.0"><span data-reactid=".25tsyol8u80.0.0.1.0.2.0.0">Published </span><span data-reactid=".25tsyol8u80.0.0.1.0.2.0.1">10 Apr 2016</span></em></div></div><div class="footer" data-reactid=".25tsyol8u80.0.0.1.1"><noscript data-reactid=".25tsyol8u80.0.0.1.1.0"></noscript><hr data-reactid=".25tsyol8u80.0.0.1.1.1"/><p data-reactid=".25tsyol8u80.0.0.1.1.2"><span data-reactid=".25tsyol8u80.0.0.1.1.2.0">我先是学会爱人，于是懂得了享受生活，热爱工作。</span><span data-reactid=".25tsyol8u80.0.0.1.1.2.1"> </span><br data-reactid=".25tsyol8u80.0.0.1.1.2.2"/><span data-reactid=".25tsyol8u80.0.0.1.1.2.3"> </span><strong data-reactid=".25tsyol8u80.0.0.1.1.2.4">Shawn Tang</strong></p><div title="Python调用simsimi api应用到新浪上" data-reactid=".25tsyol8u80.0.0.1.1.3"><div id="disqus_thread" data-reactid=".25tsyol8u80.0.0.1.1.3.0"></div><noscript data-reactid=".25tsyol8u80.0.0.1.1.3.1"><span data-reactid=".25tsyol8u80.0.0.1.1.3.1.0"><span data-reactid=".25tsyol8u80.0.0.1.1.3.1.0.0">Please enable JavaScript to view the</span><a href="http://disqus.com/?ref_noscript" data-reactid=".25tsyol8u80.0.0.1.1.3.1.0.1">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink" data-reactid=".25tsyol8u80.0.0.1.1.3.2"><span data-reactid=".25tsyol8u80.0.0.1.1.3.2.0">blog comments powered by</span><span class="logo-disqus" data-reactid=".25tsyol8u80.0.0.1.1.3.2.1">Disqus</span></a></div></div></div></div></div></div></div><script src="/react-brief/blog/bundle.js"></script></body></html>
