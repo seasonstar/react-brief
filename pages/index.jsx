@@ -69,6 +69,9 @@ class BlogIndex extends React.Component {
                   height='50'
                 />
                 <p>
+                  {config.siteTitle}
+                </p>
+                <p>
                   {config.siteDescr}
                 </p>
               </div>
