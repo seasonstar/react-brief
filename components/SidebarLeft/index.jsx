@@ -48,7 +48,9 @@ class SidebarLeft extends React.Component {
     );
 
     return (
-      <div className='sidebar'>
+      <div className='sidebar' style={{
+          background: 'url("./images/bg.jpg") no-repeat center',
+          backgroundSize: 'cover'}}>
         <div className='sidebar-inner'>
           <div className='blog-details'>
             <header>

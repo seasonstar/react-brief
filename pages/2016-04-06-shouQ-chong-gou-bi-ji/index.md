@@ -4,14 +4,7 @@ date: "2016-04-06T15:02Z"
 layout: post
 path: "/shou-Q-chong-gou-bi-ji/"
 category: "React"
-description: "
-### 使用框架：
-- React  [入门教程](https://hulufei.gitbooks.io/react-tutorial/content/)
-- Redux [学习资料](http://camsong.github.io/redux-in-chinese/index.html)
-- react-router [学习资料](http://react-guide.github.io/react-router-cn/index.html)
-- react-redux [连接介绍](https://leozdgao.me/reacthe-reduxde-qiao-jie-react-redux/)
-- react-router-redux
-"
+description: "手Q微票重构笔记。对React，Redux及第三方库的介绍，对所用工具链的说明，还有部分学习资料的整理。"
 
 ---
 
