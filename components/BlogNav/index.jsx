@@ -17,7 +17,7 @@ class BlogNav extends React.Component {
             <Link to="/about" className={location.pathname === link('/about')?"current":null}>About</Link>
           </li>
           <li>
-            <Link to="/contact" className={location.pathname === link('/contact')?"current":null}>Works</Link>
+            <Link to="/works" className={location.pathname === link('/works')?"current":null}>Works</Link>
           </li>
         </ul>
       </nav>

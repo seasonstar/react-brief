@@ -12,7 +12,7 @@ class BlogSocial extends React.Component {
     const twitter = config.linkTwitter
     const weibo = config.linkWeibo
     const rss = config.linkRss
-    const email = config.linkEmail
+    const email = 'mailto:'+config.linkEmail
     const github = config.linkGithub
 
     return (
