@@ -7,7 +7,7 @@ import SidebarLeft from '../SidebarLeft'
 import access from 'safe-access'
 import { config } from 'config'
 
-import './style.sss';
+import './style.scss';
 
 class BlogPage extends React.Component {
   render() {

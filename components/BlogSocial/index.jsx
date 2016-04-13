@@ -3,7 +3,7 @@ import { RouteHandler, Link } from 'react-router'
 import { link } from 'gatsby-helpers'
 import { config } from 'config'
 
-import './style.sss'
+import './style.scss'
 import '../../static/fonts/fontawesome/style.css'
 
 class BlogSocial extends React.Component {

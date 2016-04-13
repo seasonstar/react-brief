@@ -2,7 +2,7 @@ import React from 'react'
 import { RouteHandler, Link } from 'react-router'
 import { link } from 'gatsby-helpers'
 
-import './style.sss'
+import './style.scss'
 
 class BlogNav extends React.Component {
   render() {

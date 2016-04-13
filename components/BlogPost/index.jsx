@@ -7,7 +7,7 @@ import access from 'safe-access'
 import ReadNext from '../ReadNext'
 import { config } from 'config'
 
-import './style.sss'
+import './style.scss'
 
 import '../../static/css/highlight.css'
 

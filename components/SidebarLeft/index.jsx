@@ -4,7 +4,7 @@ import { link } from 'gatsby-helpers'
 import { config } from 'config'
 import BlogNav from '../BlogNav'
 import BlogSocial from '../BlogSocial'
-import './style.sss'
+import './style.scss'
 
 class SidebarLeft extends React.Component {
   render() {
