@@ -22,7 +22,7 @@ class SidebarLeft extends React.Component {
           to={link('/')}
         >
           <img
-            src='./images/guitar_me.jpg'
+            src='http://785i8w.com1.z0.glb.clouddn.com/guitar_me.jpg'
             width='200'
             height='200'
           />
@@ -49,7 +49,7 @@ class SidebarLeft extends React.Component {
 
     return (
       <div className='sidebar' style={{
-          background: 'url("./images/bg.jpg") no-repeat center',
+          background: 'url("http://785i8w.com1.z0.glb.clouddn.com/bg.jpg") no-repeat center',
           backgroundSize: 'cover'}}>
         <div className='sidebar-inner'>
           <div className='blog-details'>
