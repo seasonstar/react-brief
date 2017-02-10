@@ -9,6 +9,7 @@ import { config } from 'config'
 import BlogPost from '../components/BlogPost'
 import SidebarLeft from '../components/SidebarLeft'
 import BlogContent from '../components/BlogContent'
+import headpic from './images/guitar_me.jpg'
 
 class BlogIndex extends React.Component {
   render() {
@@ -64,7 +65,7 @@ class BlogIndex extends React.Component {
             <div className='main'>
               <div className="main-header">
                 <img
-                  src='./images/guitar_me.jpg'
+                  src={headpic}
                   width='50'
                   height='50'
                 />

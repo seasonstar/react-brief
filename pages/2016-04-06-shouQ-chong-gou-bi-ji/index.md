@@ -4,7 +4,7 @@ date: "2016-04-06T15:02Z"
 layout: post
 path: "/shou-Q-chong-gou-bi-ji/"
 category: "React"
-description: "手Q微票重构笔记。对React，Redux及第三方库的介绍，对所用工具链的说明，还有部分学习资料的整理。"
+description: "手Q电影票重构笔记。对React，Redux及第三方库的介绍，对所用工具链的说明，还有部分学习资料的整理。"
 
 ---
 

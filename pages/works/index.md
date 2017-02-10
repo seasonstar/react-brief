@@ -1,5 +1,5 @@
 ---
-title: "Works"
+title: "开源项目"
 layout: page
 path: "/works"
 ---
@@ -10,7 +10,7 @@ path: "/works"
 
 ![](http://785i8w.com2.z0.glb.qiniucdn.com/magicpic.jpeg?imageView/2/w/200)
 
-[Try it](http://magicpic.sinaapp.com)  -  [源码](https://github.com/seasonstar/magicpic)
+[Try it](http://magicpic.season.im)  -  [源码](https://github.com/seasonstar/magicpic)
 
 ## 与女友的计时钟
 

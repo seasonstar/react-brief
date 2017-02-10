@@ -120,10 +120,10 @@ a:hover {
 }
 
 a:visited {
-  color: #444;
+  color: darkblue;
 }
 a:visited:hover {
-  color: #444;
+  color: darkblue;
   border-bottom: 1px solid;
 }
 a:active {
