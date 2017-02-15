@@ -1,5 +1,5 @@
 ---
-title: 手Q重构笔记
+title: 手Q电影票重构笔记
 date: "2016-04-06T15:02Z"
 layout: post
 path: "/shou-Q-chong-gou-bi-ji/"

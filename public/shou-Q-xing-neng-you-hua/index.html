@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0"/><title>手Q电影票页面性能优化笔记 - Blog by Seasonstar</title><link rel="shortcut icon" href="/images/favicon.png"/><link rel="stylesheet" href="/styles.css"/></head><body><div id="react-mount"><div class="wrapper" data-reactid=".2a4gtkscb9c" data-react-checksum="-1442333129"><div data-reactid=".2a4gtkscb9c.0"><div data-reactid=".2a4gtkscb9c.0.0"><div data-reactid=".2a4gtkscb9c.0.0.0"><a class="gohome" href="/" data-reactid=".2a4gtkscb9c.0.0.0.0">All Articles</a></div><div class="blog-single" data-reactid=".2a4gtkscb9c.0.0.1"><div class="text" data-reactid=".2a4gtkscb9c.0.0.1.0"><h1 data-reactid=".2a4gtkscb9c.0.0.1.0.0">手Q电影票页面性能优化笔记</h1><div data-reactid=".2a4gtkscb9c.0.0.1.0.1"><h3>JS方面</h3>
+<ol start="0">
+<li>
+<p>利用Webpack等打包工具，把依赖js文件分类打包并压缩，按需加载。</p>
+</li>
+<li>
+<p>如果是代码量较小的js文件，可直接内嵌到html头部，减少浏览器的外部请求</p>
+</li>
+<li>
+<p>延迟或异步加载非首要的js文件</p>
+</li>
+<li>
+<p>如果是js框架构建网页内容，可利用服务器端渲染，再输出到HTML</p>
+</li>
+<li>
+<p>避免使用系统阻止的js文件，浏览器会停止解析并增加一次网络往返过程，导致网页延迟</p>
+</li>
+</ol>
+<h3>CSS方面</h3>
+<ol start="0">
+<li>
+<p>压缩，分类，按顺序先加载负责调整内容结构的内嵌部分，后加载可暂缓呈现的部分</p>
+</li>
+<li>
+<p>避免使用css动态表达式</p>
+</li>
+<li>
+<p>使用SASS/LESS等语言时，css嵌套层级不超过3层。越是复杂的css，浏览器在构建render tree时花费时间越长</p>
+</li>
+<li>
+<p>使用css3动画特性时，使用开启GPU硬件加速的代码，如transform:transition3d</p>
+</li>
+<li>
+<p>多个小图片可使用css sprites整合为一个图片，减少请求次数。利用background-position定位图片</p>
+</li>
+<li>
+<p>对于多个icon，更好的处理方法是把它们转换成svg文件后再打包成一个字体文件，用font-face加载</p>
+</li>
+</ol>
+<h3>HTML方面</h3>
+<ol start="0">
+<li>
+<p>通过nginx等web server开启Gzip压缩</p>
+</li>
+<li>
+<p>缩减首屏内容大小，限制首屏加载的图片，css和js大小</p>
+</li>
+<li>
+<p>避免目标网页和资源重定向，重定向会触发额外的HTTP请求，并会额外延长往返时间延迟</p>
+</li>
+<li>
+<p>按优先级加载首屏内容，对内容结构和图片采取懒加载方式，提升加载速度</p>
+</li>
+<li>
+<p>优化图片大小，并对10K以下的本地图片可采用base64编码内联到网页中，减少请求</p>
+</li>
+<li>
+<p>缓存Ajax请求，整理一些可缓存的API，使用LRU算法，保存请求数据</p>
+</li>
+<li>
+<p>避免空图像src，如<code>&lt;img src=&quot;&quot;&gt;</code>，它会额外增加新的请求</p>
+</li>
+<li>
+<p>使用CDN，同时减少DNS查找。将外部文件放到2-4个不同域名的空间上，可保持高度并行下载资源并减少DNS请求</p>
+</li>
+<li>
+<p>尽可能减少cookie大小，提升服务器响应时间</p>
+</li>
+<li>
+<p>对于列表等重复dom的事件处理，使用事件委托机制</p>
+</li>
+</ol>
+<p>*10. 减少dom复合层。通过chrome的devtools可查看Rendering - Layers Borders。
+浏览器会开启不同线程来绘制不同的复合层。</p>
+<blockquote>
+<p>什么情况下能使元素获得自己的层？满足以下任意情况便会创建层：</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>3D 或透视变换(perspective transform) CSS 属性</li>
+<li>使用加速视频解码的 元素</li>
+<li>拥有 3D (WebGL) 上下文或加速的 2D 上下文的 元素</li>
+<li>混合插件(如 Flash)</li>
+<li>对自己的 opacity 做 CSS 动画或使用一个动画 webkit 变换的元素</li>
+<li>拥有加速 CSS 过滤器的元素</li>
+<li>元素有一个包含复合层的后代节点(换句话说，就是一个元素拥有一个子元素，该子元素在自己的层里)</li>
+<li>元素有一个 z-index 较低且包含一个复合层的兄弟元素(换句话说就是该元素在复合层上面渲染)</li>
+</ol>
+</blockquote>
+</div><div class="date-published" data-reactid=".2a4gtkscb9c.0.0.1.0.2"><em data-reactid=".2a4gtkscb9c.0.0.1.0.2.0"><span data-reactid=".2a4gtkscb9c.0.0.1.0.2.0.0">Published </span><span data-reactid=".2a4gtkscb9c.0.0.1.0.2.0.1">February 15 2017</span></em></div></div><div class="footer" data-reactid=".2a4gtkscb9c.0.0.1.1"><noscript data-reactid=".2a4gtkscb9c.0.0.1.1.0"></noscript><hr data-reactid=".2a4gtkscb9c.0.0.1.1.1"/><p data-reactid=".2a4gtkscb9c.0.0.1.1.2"><span data-reactid=".2a4gtkscb9c.0.0.1.1.2.0">静思与正念，寂止和胜观。</span><span data-reactid=".2a4gtkscb9c.0.0.1.1.2.1"> </span><br data-reactid=".2a4gtkscb9c.0.0.1.1.2.2"/><span data-reactid=".2a4gtkscb9c.0.0.1.1.2.3"> </span><strong data-reactid=".2a4gtkscb9c.0.0.1.1.2.4">Shawn Tang</strong></p><div title="手Q电影票页面性能优化笔记" data-reactid=".2a4gtkscb9c.0.0.1.1.3"><div id="disqus_thread" data-reactid=".2a4gtkscb9c.0.0.1.1.3.0"></div><noscript data-reactid=".2a4gtkscb9c.0.0.1.1.3.1"><span data-reactid=".2a4gtkscb9c.0.0.1.1.3.1.0"><span data-reactid=".2a4gtkscb9c.0.0.1.1.3.1.0.0">Please enable JavaScript to view the</span><a href="http://disqus.com/?ref_noscript" data-reactid=".2a4gtkscb9c.0.0.1.1.3.1.0.1">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink" data-reactid=".2a4gtkscb9c.0.0.1.1.3.2"><span data-reactid=".2a4gtkscb9c.0.0.1.1.3.2.0">blog comments powered by</span><span class="logo-disqus" data-reactid=".2a4gtkscb9c.0.0.1.1.3.2.1">Disqus</span></a></div></div></div></div></div></div></div><script src="/bundle.js"></script></body></html>
