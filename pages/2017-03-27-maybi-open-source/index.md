@@ -14,7 +14,7 @@ Bibi 提供电商全栈解决方案，配合以下项目使用:
 
 电商服务后端，基于 Flask, MongoDB, Redis, Celery, RabbitMQ, 支持 Python 3.5.
 
-> [bibi-frontend](https://github.com/seasonstar/bibi)
+> [bibi-frontend](https://github.com/seasonstar/bibi-frontend)
 
 微信前端项目，采用Angularjs, gulp
 
