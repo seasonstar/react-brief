@@ -3,7 +3,7 @@ title: Bibi电商全栈解决方案开源
 date: "2017-03-27T17:50Z"
 layout: post
 path: "/bibi-open-source/"
-category: "React"
+category: "全栈"
 description: "Bibi开源电商全栈解决方案，技术选型：后端使用Flask, Mongodb, Celery, RabbitMQ, 基于Python 3开发, 微信前端使用Angularjs, gulp。Mobile App使用Ionic, Cordorva"
 
 ---
