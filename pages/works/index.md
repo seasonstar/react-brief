@@ -4,31 +4,52 @@ layout: page
 path: "/works"
 ---
 
+## 24time
+
+微信小程序社区功能全栈解决方案:
+
+> [egg-24time](https://github.com/seasonstar/egg-24time)
+
+后端使用Egg，Mysql，Redis，基于Nodejs开发，全套代码使用ES6编写
+
+> [weapp-24time](https://github.com/seasonstar/weapp-24time)
+
+微信小程序端
+
+> [egg-weapp-sdk](https://github.com/seasonstar/egg-weapp-sdk)
+
+小程序截图
+![](http://785i8w.com1.z0.glb.clouddn.com/24time_shot.png)
+
+
 ## Bibi
 
-本项目是Bibi电商服务后端，基于 Flask, MongoDB, Redis, Celery, RabbitMQ, 支持 Python 3.5.
+Bibi 提供电商全栈解决方案，配合以下项目使用:
 
+> [bibi server](https://github.com/seasonstar/bibi)
+
+电商服务后端，基于 Flask, MongoDB, Redis, Celery, RabbitMQ, 支持 Python 3.5.
+
+> [bibi-frontend](https://github.com/seasonstar/bibi-frontend)
+
+微信前端项目，采用Angularjs, gulp
+
+> [bibi-ionic](https://github.com/seasonstar/bibi-ionic)
+
+Hybrid App源码，采用Ionic, Cordova
+
+后台系统截图
 ![](http://7xn6eu.com1.z0.glb.clouddn.com/Item%20Backend.png?imageView/2/w/400)
 
-[Try it](http://m.maybi.cn)  -  [源码](https://github.com/seasonstar/bibi)
-
-## Bibi-frontend
-
-本项目是bibi电商微信前端，基于Angularjs, gulp
-
+网页前端截图
 ![](http://7xn6eu.com1.z0.glb.clouddn.com/frontend.jpeg?imageView/2/w/400)
 
-[Try it](http://m.maybi.cn)  -  [源码](https://github.com/seasonstar/bibi-frontend)
-
-## Bibi-ionic
-
-本项目是bibi的Mobile App，基于Ionic, cordova
-
+Hybrid App截图
 ![](http://7xn6eu.com1.z0.glb.clouddn.com/ionicapp01.jpg?imageView/2/w/400)
 ![](http://7xn6eu.com1.z0.glb.clouddn.com/ionicapp02.jpg?imageView/2/w/400)
 ![](http://7xn6eu.com1.z0.glb.clouddn.com/ionicapp031.jpg?imageView/2/w/400)
 
-[Try it](http://android.myapp.com/myapp/detail.htm?apkName=cn.maybi.ionicapp)  -  [源码](https://github.com/seasonstar/bibi-ionic)
+[Try it](http://m.maybi.cn)
 
 ## 魔术头像
 
