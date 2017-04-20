@@ -56,7 +56,7 @@ Egg是本人接触和使用的第一款Nodejs框架，但不吹不捧，Egg出�
 
 为了让处理微信小程序的服务能够识别会话，写了个插件egg的微信小程序的用户会话管理插件，需配合腾讯云开发的[qcloud-weapp-client-sdk](https://github.com/tencentyun/weapp-client-sdk)使用。
 
-废话不多说了，干货都在上面的[Github 地址](https://github.com/seasonstar/egg-24time)里
+废话不多说了
 
 具体的源码介绍和项目指南，已写在各个项目的README上。
 
